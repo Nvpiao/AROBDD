@@ -100,7 +100,7 @@ public class PDFTextLocations extends PDFTextStripper {
                 );
         // split to room and other facilities
         List<CoordinateText> coordinateRoomTexts = coordinates.get(Type.ROOM);
-        List<CoordinateText> coordinateFacilityTexts = coordinates.get(Type.FACILITY);
+        List<CoordinateText> coordinateFacilityTexts = coordinates.get(Type.SENSOR);
 
         // clean up rooms
         coordinateRoomsTexts = cleanUpRooms(coordinateRoomTexts);
@@ -144,12 +144,16 @@ public class PDFTextLocations extends PDFTextStripper {
         name = pdfFile.getParentFile().getAbsolutePath() + File.separator + name + "-loc_text.csv";
         FileWriter out = new FileWriter(name);
         try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(HEADERS))) {
-            resultCoordinateText = Lists.newArrayList(coordinateRoomsTexts);
-            resultCoordinateText.addAll(coordinateFacilitiesTexts);
-            resultCoordinateText.sort(
-                    Comparator.comparing(CoordinateText::getGroupId)
-                            .thenComparing(CoordinateText::getType)
-            );
+            if (Objects.isNull(coordinateRoomsTexts) && Objects.isNull(coordinateFacilitiesTexts)) {
+                resultCoordinateText = Lists.newArrayList(coordinateTexts);
+            } else {
+                resultCoordinateText = Objects.isNull(coordinateRoomsTexts) ? Lists.newArrayList() : Lists.newArrayList(coordinateRoomsTexts);
+                resultCoordinateText.addAll(coordinateFacilitiesTexts);
+                resultCoordinateText.sort(
+                        Comparator.comparing(CoordinateText::getGroupId)
+                                .thenComparing(CoordinateText::getType)
+                );
+            }
 
             write(printer, resultCoordinateText);
         }

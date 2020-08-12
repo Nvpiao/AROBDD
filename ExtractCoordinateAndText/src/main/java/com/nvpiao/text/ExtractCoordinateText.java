@@ -49,17 +49,17 @@ public class ExtractCoordinateText {
             Writer dummy = new OutputStreamWriter(new ByteArrayOutputStream());
             stripper.writeText(document, dummy);
 
-            // tide up text and coordinate
-            stripper.tide();
-
-            // extract relation between texts
-            stripper.extractRelation(PDFTextLocations.EUCLIDEAN_FUNC);
+//            // tide up text and coordinate
+//            stripper.tide();
+//
+//            // extract relation between texts
+//            stripper.extractRelation(PDFTextLocations.EUCLIDEAN_FUNC);
 
             // store to file
             stripper.store(pdfFile);
 
-            double accuracy = stripper.getAccuracy(bmFile);
-            System.out.println(String.format("Accuracy (Sensors are correctly related to the correct room): %.2f%%", accuracy * 100));
+//            double accuracy = stripper.getAccuracy(bmFile);
+//            System.out.println(String.format("Accuracy (Sensors are correctly related to the correct room): %.2f%%", accuracy * 100));
         }
     }
 }

@@ -47,7 +47,7 @@ public class CoordinateText {
         if (textPositions.get(0).getFontSize() == 233.0) {
             this.type = Type.ROOM;
         } else {
-            this.type = Type.FACILITY;
+            this.type = Type.SENSOR;
         }
 
         // top left
@@ -108,6 +108,7 @@ public class CoordinateText {
         this.groupId = groupId;
     }
 
+    @Override
     public String toString() {
         return String.join("_", texts);
     }
