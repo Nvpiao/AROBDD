@@ -43,8 +43,12 @@ import java.util.stream.Collectors;
  */
 public class PDFTextLocations extends PDFTextStripper {
 
-    public static BiFunction<CoordinateText.Coordinate, CoordinateText.Coordinate, Float> EUCLIDEAN_FUNC = (a, b) ->
-            (float) Math.sqrt(Math.pow(b.getX() - a.getX(), 2) + Math.pow(b.getY() - a.getY(), 2));
+    public static BiFunction<CoordinateText.Coordinate,
+            CoordinateText.Coordinate, Float>
+            EUCLIDEAN_FUNC = (a, b) -> (float) Math.sqrt(
+            Math.pow(b.getX() - a.getX(), 2)
+                    + Math.pow(b.getY() - a.getY(), 2)
+    );
 
     private static final String PATTERN_FACILITY = "(.+/.+)|(^[^-]+-[^-]+$)";
 
@@ -67,7 +71,7 @@ public class PDFTextLocations extends PDFTextStripper {
 
     private List<CoordinateText> coordinateRoomsTexts;
 
-    private List<CoordinateText> coordinateFacilitiesTexts;
+    private List<CoordinateText> coordinateSensorsTexts;
 
     private List<CoordinateText> resultCoordinateText;
 
@@ -106,7 +110,7 @@ public class PDFTextLocations extends PDFTextStripper {
         coordinateRoomsTexts = cleanUpRooms(coordinateRoomTexts);
 
         // clean up facilities
-        coordinateFacilitiesTexts = cleanUpFacilities(coordinateFacilityTexts);
+        coordinateSensorsTexts = cleanUpFacilities(coordinateFacilityTexts);
 
         // store
         if (!Objects.isNull(pdfFile)) {
@@ -144,11 +148,11 @@ public class PDFTextLocations extends PDFTextStripper {
         name = pdfFile.getParentFile().getAbsolutePath() + File.separator + name + "-loc_text.csv";
         FileWriter out = new FileWriter(name);
         try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(HEADERS))) {
-            if (Objects.isNull(coordinateRoomsTexts) && Objects.isNull(coordinateFacilitiesTexts)) {
+            if (Objects.isNull(coordinateRoomsTexts) && Objects.isNull(coordinateSensorsTexts)) {
                 resultCoordinateText = Lists.newArrayList(coordinateTexts);
             } else {
                 resultCoordinateText = Objects.isNull(coordinateRoomsTexts) ? Lists.newArrayList() : Lists.newArrayList(coordinateRoomsTexts);
-                resultCoordinateText.addAll(coordinateFacilitiesTexts);
+                resultCoordinateText.addAll(coordinateSensorsTexts);
                 resultCoordinateText.sort(
                         Comparator.comparing(CoordinateText::getGroupId)
                                 .thenComparing(CoordinateText::getType)
@@ -232,15 +236,24 @@ public class PDFTextLocations extends PDFTextStripper {
         coordinateTexts.add(new CoordinateText(lineText, textPositions));
     }
 
-    public void extractRelation(BiFunction<CoordinateText.Coordinate, CoordinateText.Coordinate, Float> func) {
+    /**
+     * Assign all sensors to its closest room.
+     *
+     * @param func A Distance Calculation Function
+     */
+    public void extractRelation(BiFunction<CoordinateText.Coordinate,
+            CoordinateText.Coordinate, Float> func) {
+        // check label
         if (!canExtract) {
             return;
         }
 
-        coordinateFacilitiesTexts.forEach(coordinateFacilityText -> {
+        // iterate all sensors
+        coordinateSensorsTexts.forEach(coordinateSensorText -> {
             List<Float> distances = Lists.newArrayList();
             coordinateRoomsTexts.forEach(coordinateRoomText -> {
-                distances.add(func.apply(coordinateFacilityText.getMiddle(), coordinateRoomText.getMiddle()));
+                distances.add(func.apply(coordinateSensorText.getMiddle(),
+                        coordinateRoomText.getMiddle()));
             });
 
             // find minimum distance
@@ -248,7 +261,7 @@ public class PDFTextLocations extends PDFTextStripper {
             int groupId = distances.indexOf(minDis);
 
             // set groupId
-            coordinateFacilityText.setGroupId(groupId);
+            coordinateSensorText.setGroupId(groupId);
         });
     }
 
