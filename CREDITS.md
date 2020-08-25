@@ -19,5 +19,9 @@ terms and conditions and/or require certain notices as described below.
 * [pdf2image](https://github.com/Belval/pdf2image), licensed under the [MIT License](https://github.com/Belval/pdf2image/blob/master/LICENSE)  
   Copyright (c) 2017 Edouard Belval
   
+* [scikit-learn](https://github.com/scikit-learn), licensed under the [New BSD License](https://github.com/scikit-learn/scikit-learn/blob/master/COPYING)  
+  Copyright (c) 2007–2020 The scikit-learn developers.
+
+  
   
   

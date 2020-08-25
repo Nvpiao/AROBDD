@@ -25,5 +25,7 @@ Subproject
 There are four subprojects.
 - ExtractCoordinateAndText
 - PDFMiner_test
+- OpenCVTsseract_test
+- Sklearn_test
 - RoomSplit
 - Report
