@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ebc2d64-0c98-44df-9dd3-a6a489715754" name="Default Changelist" comment="" />
+    <list default="true" id="1ebc2d64-0c98-44df-9dd3-a6a489715754" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/rooms.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/rooms.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/findRoom.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/findRoom.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="CoverageViewManager">
     <option name="myElementSize" value="431" />
@@ -31,28 +40,47 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1f2bJUWSuSHzk78dxcAkBkUq0Dy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources" />
+    <property name="add_unversioned_files" value="true" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.preProcessRoom">
+  <component name="RestServicesNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="RunManager" selected="Python.test">
     <configuration name="findRoom" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RoomSplit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,12 +125,46 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="RoomSplit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.preProcessRoom" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.findRoom" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -116,6 +178,12 @@
       <updated>1595419062197</updated>
       <workItem from="1595419064079" duration="1019000" />
       <workItem from="1595420140354" duration="9445000" />
+      <workItem from="1598007591991" duration="28000" />
+      <workItem from="1598007691402" duration="691000" />
+      <workItem from="1598008436957" duration="4722000" />
+      <workItem from="1598220209439" duration="5471000" />
+      <workItem from="1598364536039" duration="62000" />
+      <workItem from="1598366557713" duration="2391000" />
     </task>
     <servers />
   </component>
@@ -123,49 +191,75 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1134" height="629" key="DebuggerActiveHint" timestamp="1595420285131">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state x="452" y="87" key="#Plugins" timestamp="1598007614544">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="452" y="87" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1598007614544" />
+    <state x="752" y="335" key="#com.intellij.debugger.actions.ViewTextAction" timestamp="1598008190759">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="752" y="335" key="#com.intellij.debugger.actions.ViewTextAction/0.0.1920.1040@0.0.1920.1040" timestamp="1598008190759" />
+    <state x="414" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598007751704">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598007751704" />
+    <state x="414" y="32" key="CommitChangelistDialog2" timestamp="1598394289387">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="32" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1598394289387" />
+    <state width="1134" height="626" key="DebuggerActiveHint" timestamp="1598009303965">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1134" height="626" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1598009303965" />
     <state width="1134" height="629" key="DebuggerActiveHint/0.34.1920.1046@0.34.1920.1046" timestamp="1595420285131" />
     <state x="100" y="132" width="1720" height="848" key="DiffContextDialog" timestamp="1595439949118">
       <screen x="0" y="34" width="1920" height="1046" />
     </state>
     <state x="100" y="132" width="1720" height="848" key="DiffContextDialog/0.34.1920.1046@0.34.1920.1046" timestamp="1595439949118" />
-    <state width="1864" height="319" key="GridCell.Tab.0.bottom" timestamp="1595443515318">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.0.bottom" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.0.bottom/0.34.1920.1046@0.34.1920.1046" timestamp="1595443515318" />
-    <state width="1864" height="319" key="GridCell.Tab.0.center" timestamp="1595443515317">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.0.center" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.0.center/0.34.1920.1046@0.34.1920.1046" timestamp="1595443515317" />
-    <state width="1864" height="319" key="GridCell.Tab.0.left" timestamp="1595443515317">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.0.left" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.0.left/0.34.1920.1046@0.34.1920.1046" timestamp="1595443515317" />
-    <state width="1864" height="319" key="GridCell.Tab.0.right" timestamp="1595443515317">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.0.right" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.0.right/0.34.1920.1046@0.34.1920.1046" timestamp="1595443515317" />
-    <state width="1864" height="319" key="GridCell.Tab.1.bottom" timestamp="1595443516271">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.1.bottom" timestamp="1598366640752">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640752" />
     <state width="1864" height="319" key="GridCell.Tab.1.bottom/0.34.1920.1046@0.34.1920.1046" timestamp="1595443516271" />
-    <state width="1864" height="319" key="GridCell.Tab.1.center" timestamp="1595443516271">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.1.center" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.1.center/0.34.1920.1046@0.34.1920.1046" timestamp="1595443516271" />
-    <state width="1864" height="319" key="GridCell.Tab.1.left" timestamp="1595443516270">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.1.left" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.1.left/0.34.1920.1046@0.34.1920.1046" timestamp="1595443516270" />
-    <state width="1864" height="319" key="GridCell.Tab.1.right" timestamp="1595443516271">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state width="1865" height="224" key="GridCell.Tab.1.right" timestamp="1598366640751">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1865" height="224" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1598366640751" />
     <state width="1864" height="319" key="GridCell.Tab.1.right/0.34.1920.1046@0.34.1920.1046" timestamp="1595443516271" />
-    <state x="419" y="191" key="SettingsEditor" timestamp="1595420229370">
-      <screen x="0" y="34" width="1920" height="1046" />
+    <state x="419" y="0" key="SettingsEditor" timestamp="1598008395822">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="419" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1598008395822" />
     <state x="419" y="191" key="SettingsEditor/0.34.1920.1046@0.34.1920.1046" timestamp="1595420229370" />
     <state x="100" y="132" width="1720" height="848" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595436314111">
       <screen x="0" y="34" width="1920" height="1046" />
@@ -189,34 +283,30 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/findRoom.py</url>
-          <line>73</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/preProcessRoom.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/preProcessRoom.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/preProcessRoom.py</url>
           <line>31</line>
-          <option name="timeStamp" value="24" />
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/preProcessRoom.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="27" />
+          <url>file://$PROJECT_DIR$/src/findRoom.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/findRoom.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="x[i]" />
+        <watch expression="x[j]" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RoomSplit$findRoom.coverage" NAME="findRoom Coverage Results" MODIFIED="1595420446081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/RoomSplit$preProcessRoom.coverage" NAME="preProcessRoom Coverage Results" MODIFIED="1595443515223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/RoomSplit$findRoom.coverage" NAME="findRoom Coverage Results" MODIFIED="1598226876392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/RoomSplit$test.coverage" NAME="test Coverage Results" MODIFIED="1598366616133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

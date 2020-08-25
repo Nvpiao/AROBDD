@@ -19,7 +19,7 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
 
     img[img < 128] = 0
     img[img > 128] = 255
-    _, contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     mask = np.zeros_like(img)
     for contour in contours:
         area = cv2.contourArea(contour)
@@ -52,12 +52,12 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
                 cv2.line(img, (x, y1), (x, y2), color, 1)
 
     # Mark the outside of the house as black
-    _, contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
     biggest_contour = max(contour_sizes, key=lambda x: x[0])[1]
     mask = np.zeros_like(mask)
     cv2.fillPoly(mask, [biggest_contour], 255)
-    img[mask == 0] = 0
+    img[mask == 0] = 255
 
     # Find the connected components in the house
     ret, labels = cv2.connectedComponents(img)
@@ -77,7 +77,8 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
 
 
 # Read gray image
-img = cv2.imread("../resources/rooms.png", 0)
+# img = cv2.imread("../resources/rooms.png", 0)
+img = cv2.imread("../resources/34676-M57-0302_Iss7_removed_text.jpg", 0)
 rooms, colored_house = find_rooms(img.copy())
 cv2.imshow('result', colored_house)
 cv2.waitKey()
