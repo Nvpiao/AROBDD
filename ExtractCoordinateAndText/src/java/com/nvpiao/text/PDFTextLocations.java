@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,7 +74,9 @@ public class PDFTextLocations extends PDFTextStripper {
 
     private List<CoordinateText> coordinateSensorsTexts;
 
-    private List<CoordinateText> resultCoordinateText;
+    private List<CoordinateText> resultCoordinateTexts;
+
+    private List<CoordinateText> benchmarkCoordinateTexts;
 
     /**
      * Instantiate a new PDFTextStripper object.
@@ -81,7 +84,36 @@ public class PDFTextLocations extends PDFTextStripper {
      * @throws IOException If there is an error loading the properties.
      */
     public PDFTextLocations() throws IOException {
+        this(null);
+    }
+
+    /**
+     * Instantiate a new PDFTextStripper object with benchmark file.
+     *
+     * @param bmFile File of benchmark coordinates
+     * @throws IOException If there is an error loading the properties.
+     */
+    public PDFTextLocations(File bmFile) throws IOException {
         coordinateTexts = Lists.newArrayList();
+        loadBenchmarkCoordinates(bmFile);
+    }
+
+    private void loadBenchmarkCoordinates(File bmFile) throws IOException {
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader("text", "type", "group")
+                .withFirstRecordAsHeader()
+                .parse(new FileReader(bmFile));
+
+        benchmarkCoordinateTexts = Lists.newArrayList();
+
+        for (CSVRecord record : records) {
+            String[] texts = record.get("text").split("_");
+            String type = record.get("type");
+            int groupId = Integer.parseInt(record.get("group"));
+
+            CoordinateText coordinateText = new CoordinateText(Lists.newArrayList(texts),
+                    Type.valueOf(type), groupId);
+            benchmarkCoordinateTexts.add(coordinateText);
+        }
     }
 
     public void tide() throws IOException {
@@ -110,7 +142,7 @@ public class PDFTextLocations extends PDFTextStripper {
         coordinateRoomsTexts = cleanUpRooms(coordinateRoomTexts);
 
         // clean up facilities
-        coordinateSensorsTexts = cleanUpFacilities(coordinateFacilityTexts);
+        coordinateSensorsTexts = cleanUpSensors(coordinateFacilityTexts);
 
         // store
         if (!Objects.isNull(pdfFile)) {
@@ -118,7 +150,7 @@ public class PDFTextLocations extends PDFTextStripper {
         }
     }
 
-    private List<CoordinateText> cleanUpFacilities(List<CoordinateText> coordinateFacilityTexts) {
+    private List<CoordinateText> cleanUpSensors(List<CoordinateText> coordinateFacilityTexts) {
         Pattern facilityPattern = Pattern.compile(PATTERN_FACILITY);
         return coordinateFacilityTexts.stream()
                 .filter(coordinateText -> {
@@ -149,17 +181,25 @@ public class PDFTextLocations extends PDFTextStripper {
         FileWriter out = new FileWriter(name);
         try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(HEADERS))) {
             if (Objects.isNull(coordinateRoomsTexts) && Objects.isNull(coordinateSensorsTexts)) {
-                resultCoordinateText = Lists.newArrayList(coordinateTexts);
+                resultCoordinateTexts = Lists.newArrayList(coordinateTexts);
             } else {
-                resultCoordinateText = Objects.isNull(coordinateRoomsTexts) ? Lists.newArrayList() : Lists.newArrayList(coordinateRoomsTexts);
-                resultCoordinateText.addAll(coordinateSensorsTexts);
-                resultCoordinateText.sort(
+                resultCoordinateTexts = Objects.isNull(coordinateRoomsTexts) ? Lists.newArrayList() : Lists.newArrayList(coordinateRoomsTexts);
+                resultCoordinateTexts.addAll(coordinateSensorsTexts);
+                resultCoordinateTexts.sort(
                         Comparator.comparing(CoordinateText::getGroupId)
                                 .thenComparing(CoordinateText::getType)
                 );
             }
 
-            write(printer, resultCoordinateText);
+            // remove all rows are not in benchmark set.
+            resultCoordinateTexts = resultCoordinateTexts.stream()
+                    .filter(resultCoordinateText -> benchmarkCoordinateTexts.stream()
+                            .anyMatch(benchmarkCoordinateText ->
+                                    benchmarkCoordinateText.toString()
+                                            .equals(resultCoordinateText.toString())))
+                    .collect(Collectors.toList());
+
+            write(printer, resultCoordinateTexts);
         }
     }
 
@@ -265,50 +305,197 @@ public class PDFTextLocations extends PDFTextStripper {
         });
     }
 
-    public double getAccuracy(File bmFile) throws IOException {
+    /**
+     * Calculating the accuracy, which is defined as:
+     * <p>
+     * Accuracy = CC / ADP
+     * where \textit{CC} means the number of rows, which is correctly classified.
+     * \textit{ADP} means the number of  data rows.
+     * </p>
+     *
+     * @return The accuracy of relationship extraction pipeline
+     */
+    public double getAccuracy() {
         if (!canExtract) {
             return 0.0;
         }
 
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader("text", "type", "group")
-                .withFirstRecordAsHeader()
-                .parse(new FileReader(bmFile));
-
-        List<CoordinateText> benchmarkCoordinateTexts = Lists.newArrayList();
-
-        for (CSVRecord record : records) {
-            String[] texts = record.get("text").split("_");
-            String type = record.get("type");
-            int groupId = Integer.parseInt(record.get("group"));
-
-            CoordinateText coordinateText = new CoordinateText(Lists.newArrayList(texts),
-                    Type.valueOf(type), groupId);
-            benchmarkCoordinateTexts.add(coordinateText);
-        }
-
         AtomicInteger match = new AtomicInteger();
-        AtomicInteger allTexts = new AtomicInteger();
 
-        resultCoordinateText.stream()
+        resultCoordinateTexts.stream()
                 .collect(Collectors.groupingBy(CoordinateText::getGroupId))
                 .forEach((k, vs) -> {
+                    int benchmarkGroupId = -1;
                     for (CoordinateText v : vs) {
+                        String name = v.toString();
                         // ignore room
                         if (v.getType() == Type.ROOM) {
+                            benchmarkGroupId = benchmarkCoordinateTexts.stream()
+                                    .filter(coordinateText -> coordinateText.toString().equals(name))
+                                    .findFirst()
+                                    .get()
+                                    .getGroupId();
                             continue;
                         }
 
-                        String name = v.toString();
+                        int finalBenchmarkGroupId = benchmarkGroupId;
                         boolean anyMatch = benchmarkCoordinateTexts.stream()
                                 // same groupId && same text
-                                .anyMatch(coordinateText -> coordinateText.getGroupId() == k
+                                .anyMatch(coordinateText -> coordinateText.getGroupId() == finalBenchmarkGroupId
                                         && coordinateText.toString().equals(name));
                         if (anyMatch) {
                             match.incrementAndGet();
                         }
-                        allTexts.incrementAndGet();
                     }
                 });
-        return match.get() * 1.0 / allTexts.get();
+        return match.get() * 1.0 / resultCoordinateTexts.size();
+    }
+
+
+    /**
+     * Calculating the Purity value of relationship extraction pipeline
+     *
+     * @return The value of Purity
+     */
+    public double getPurity() {
+
+        AtomicReference<Double> allPurity = new AtomicReference<>(0.0);
+        resultCoordinateTexts.stream()
+                .collect(Collectors.groupingBy(CoordinateText::getGroupId))
+                .forEach((k, vs) -> {
+                    int matchNum = 0;
+                    int benchmarkGroupId = -1;
+                    for (CoordinateText v : vs) {
+                        String name = v.toString();
+                        // ignore room
+                        if (v.getType() == Type.ROOM) {
+                            benchmarkGroupId = benchmarkCoordinateTexts.stream()
+                                    .filter(coordinateText -> coordinateText.toString().equals(name))
+                                    .findFirst()
+                                    .get()
+                                    .getGroupId();
+                            continue;
+                        }
+
+                        int finalBenchmarkGroupId = benchmarkGroupId;
+                        boolean anyMatch = benchmarkCoordinateTexts.stream()
+                                // same groupId && same text
+                                .anyMatch(coordinateText -> coordinateText.getGroupId() == finalBenchmarkGroupId
+                                        && coordinateText.toString().equals(name));
+                        if (anyMatch) {
+                            ++matchNum;
+                        }
+                    }
+                    double tmpPurity = matchNum * 1.0 / resultCoordinateTexts.size();
+                    allPurity.set(allPurity.get() + tmpPurity);
+
+                });
+        return allPurity.get();
+    }
+
+    /**
+     * Calculating the RandIndex value of relationship extraction pipeline
+     *
+     * @return The value of RandIndex
+     */
+    public double getRandIndex() {
+
+        assert benchmarkCoordinateTexts.size() == resultCoordinateTexts.size();
+
+        int sames = 0;
+        int coordinateSize = benchmarkCoordinateTexts.size();
+        // Iteration
+        for (int i = 0; i < coordinateSize - 1; ++i) {
+            for (int j = i + 1; j < coordinateSize; ++j) {
+                boolean xStatus = getStatus(resultCoordinateTexts.get(i),
+                        resultCoordinateTexts.get(j));
+                boolean yStatus = getStatus(benchmarkCoordinateTexts.get(i),
+                        benchmarkCoordinateTexts.get(j));
+
+                sames += (xStatus == yStatus) ? 1 : 0;
+            }
+        }
+        // Rand Index Formula
+        return sames * 2.0 / (coordinateSize * (coordinateSize - 1));
+    }
+
+    /**
+     * Judge if id of group are the same or not.
+     *
+     * @param x instance of CoordinateText object
+     * @param y instance of CoordinateText object
+     * @return if id of groups are the same return {@code True},
+     * otherwise, return {@code False}
+     */
+    public boolean getStatus(CoordinateText x, CoordinateText y) {
+        return x.getGroupId() == y.getGroupId();
+    }
+
+
+    /**
+     * Calculating the F-measure value of relationship extraction pipeline
+     *
+     * @return The value of F-measure
+     */
+    public double getFMeasure() {
+
+        double fMeasure = 0.0;
+
+        int m = (int) benchmarkCoordinateTexts.stream()
+                .map(CoordinateText::getGroupId)
+                .distinct()
+                .count();
+        int n = resultCoordinateTexts.size();
+
+        for (int j = 0; j < m; ++j) {
+            int finalJ = j;
+            // find each group in benchmark set
+            List<CoordinateText> bCoordinateTexts = benchmarkCoordinateTexts.stream()
+                    .filter(coordinateText -> coordinateText.getGroupId() == finalJ)
+                    .collect(Collectors.toList());
+            long pJ = bCoordinateTexts.size();
+
+            // find ROOM in each benchmark group
+            CoordinateText roomCoordinateText = bCoordinateTexts.stream()
+                    .filter(coordinateText -> coordinateText.getType() == Type.ROOM)
+                    .findFirst()
+                    .get();
+
+            // find group id in result set
+            int rGroupId = resultCoordinateTexts.stream()
+                    .filter(coordinateText -> coordinateText.toString()
+                            .equals(roomCoordinateText.toString()))
+                    .findFirst()
+                    .get()
+                    .getGroupId();
+
+            // find the same group in result set
+            List<CoordinateText> rCoordinateTexts = resultCoordinateTexts.stream()
+                    .filter(coordinateText -> coordinateText.getGroupId() == rGroupId)
+                    .collect(Collectors.toList());
+            int cI = rCoordinateTexts.size();
+
+            // compare and calculate F-measure_j
+            long pjci = rCoordinateTexts.stream()
+                    .filter(rCoordinateText -> bCoordinateTexts.stream()
+                            .anyMatch(bCoordinateText -> bCoordinateText.toString()
+                                    .equals(rCoordinateText.toString())))
+                    .count();
+
+            // precision && recall
+            double precision = pjci * 1.0 / cI;
+            double recall = pjci * 1.0 / pJ;
+
+            // F-measure
+            double tmpFMeasure = 2 * precision * recall / (precision + recall);
+
+            // weight
+            double wJ = pJ * 1.0 / n;
+
+            // accumulative F-measure
+            fMeasure += tmpFMeasure * wJ;
+        }
+
+        return fMeasure;
     }
 }
