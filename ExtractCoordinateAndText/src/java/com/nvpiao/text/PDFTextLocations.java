@@ -51,7 +51,7 @@ public class PDFTextLocations extends PDFTextStripper {
                     + Math.pow(b.getY() - a.getY(), 2)
     );
 
-    private static final String PATTERN_FACILITY = "(.+/.+)|(^[^-]+-[^-]+$)";
+    private static final String PATTERN_SENSOR = "(.+/.+)|(^[^-]+-[^-]+$)";
 
     private final String[] HEADERS = {"x", "y", "text", "type", "group"};
 
@@ -134,15 +134,15 @@ public class PDFTextLocations extends PDFTextStripper {
                                 Collectors.toList()
                         )
                 );
-        // split to room and other facilities
+        // split to room and other sensors
         List<CoordinateText> coordinateRoomTexts = coordinates.get(Type.ROOM);
-        List<CoordinateText> coordinateFacilityTexts = coordinates.get(Type.SENSOR);
+        List<CoordinateText> coordinateSensorTexts = coordinates.get(Type.SENSOR);
 
         // clean up rooms
         coordinateRoomsTexts = cleanUpRooms(coordinateRoomTexts);
 
-        // clean up facilities
-        coordinateSensorsTexts = cleanUpSensors(coordinateFacilityTexts);
+        // clean up sensors
+        coordinateSensorsTexts = cleanUpSensors(coordinateSensorTexts);
 
         // store
         if (!Objects.isNull(pdfFile)) {
@@ -150,14 +150,14 @@ public class PDFTextLocations extends PDFTextStripper {
         }
     }
 
-    private List<CoordinateText> cleanUpSensors(List<CoordinateText> coordinateFacilityTexts) {
-        Pattern facilityPattern = Pattern.compile(PATTERN_FACILITY);
-        return coordinateFacilityTexts.stream()
+    private List<CoordinateText> cleanUpSensors(List<CoordinateText> coordinateSensorTexts) {
+        Pattern sensorsPattern = Pattern.compile(PATTERN_SENSOR);
+        return coordinateSensorTexts.stream()
                 .filter(coordinateText -> {
                     List<String> texts = coordinateText.getTexts();
                     assert !texts.isEmpty();
                     String text = texts.get(0);
-                    // name of facilities can not longer than 20
+                    // name of sensors can not longer than 20
                     if (text.length() >= MAX_NAME_LEN) {
                         return false;
                     }
@@ -166,8 +166,8 @@ public class PDFTextLocations extends PDFTextStripper {
                         return false;
                     }
 
-                    Matcher facilityMatcher = facilityPattern.matcher(text);
-                    return facilityMatcher.find();
+                    Matcher sensorMatcher = sensorsPattern.matcher(text);
+                    return sensorMatcher.find();
                 }).collect(Collectors.toList());
     }
 
@@ -400,7 +400,7 @@ public class PDFTextLocations extends PDFTextStripper {
      */
     public double getRandIndex() {
 
-        assert benchmarkCoordinateTexts.size() == resultCoordinateTexts.size();
+        assert benchmarkCoordinateTexts.size() >= resultCoordinateTexts.size();
 
         int sames = 0;
         int coordinateSize = benchmarkCoordinateTexts.size();
