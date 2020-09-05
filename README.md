@@ -29,3 +29,4 @@ There are four subprojects.
 - Sklearn_test
 - RoomSplit
 - Report
+- Demo

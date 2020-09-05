@@ -1,0 +1,17 @@
+# Input pdf file.
+input_pdf_file=resources/34676-M57-0302_Iss7.pdf
+
+# The benchmark result corresponding to the input pdf file.
+benchmark_result_file=resources/34676-M57-0302_Iss7-benchmark.csv
+
+# Distance function: euclidean/manhattan/cosine.
+distance_algorithm=euclidean
+
+# Format result.
+result_format=true
+
+# Show the extracted text in pdf file
+show_draw_text_result=false
+
+# Remove all text from input pdf file
+remove_all_text_from_pdf=false
