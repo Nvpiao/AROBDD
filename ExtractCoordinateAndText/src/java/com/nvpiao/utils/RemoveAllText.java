@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nvpiao.text;
+package com.nvpiao.utils;
 
 import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.contentstream.operator.Operator;
@@ -55,7 +55,6 @@ public final class RemoveAllText {
      * @throws IOException If there is an error parsing the document.
      */
     public static void main(String[] args) throws IOException {
-        args = new String[]{"resources/test/34676-M57-0302_Iss7.pdf", "resources/test/34676-M57-0302_Iss7_removed_text.pdf"};
 
         if (args.length != 2) {
             usage();

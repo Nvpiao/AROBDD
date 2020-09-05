@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * A class contains coordinates and text
+ *
+ * @author Ming Liu
+ */
 public class CoordinateText {
 
     /**

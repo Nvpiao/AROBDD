@@ -14,6 +14,11 @@
  */
 package com.nvpiao.text;
 
+/**
+ * A enumeration contains types of room and sensor.
+ *
+ * @author Ming Liu
+ */
 public enum Type {
     ROOM,
     SENSOR

@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -44,6 +46,20 @@ import java.util.stream.Collectors;
  */
 public class PDFTextLocations extends PDFTextStripper {
 
+    // manhattan distance function
+    public static final BiFunction<CoordinateText.Coordinate,
+            CoordinateText.Coordinate, Float>
+            MANHATTAN_FUNC = (a, b) -> Math.abs(b.getX() - a.getX())
+            + Math.abs(b.getY() - a.getY());
+
+    // cosine distance function
+    public static final BiFunction<CoordinateText.Coordinate,
+            CoordinateText.Coordinate, Float>
+            COSINE_FUNC = (a, b) -> (float) ((a.getX() * b.getX() + a.getY() * b.getY()) * 1.0
+            / (Math.sqrt(a.getX() * a.getX() + a.getY() * a.getY())
+            * Math.sqrt(b.getX() * b.getX() + b.getY() * b.getY())));
+
+    // euclidean distance function
     public static BiFunction<CoordinateText.Coordinate,
             CoordinateText.Coordinate, Float>
             EUCLIDEAN_FUNC = (a, b) -> (float) Math.sqrt(
@@ -177,7 +193,7 @@ public class PDFTextLocations extends PDFTextStripper {
         }
 
         String name = pdfFile.getName().substring(0, pdfFile.getName().lastIndexOf('.'));
-        name = pdfFile.getParentFile().getAbsolutePath() + File.separator + name + "-loc_text.csv";
+        name = "output" + File.separator + name + "-loc_text.csv";
         FileWriter out = new FileWriter(name);
         try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(HEADERS))) {
             if (Objects.isNull(coordinateRoomsTexts) && Objects.isNull(coordinateSensorsTexts)) {
